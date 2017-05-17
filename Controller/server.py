@@ -1,20 +1,20 @@
 import socket
 
 ip = input('Input IP: ')
-port = int(input('Input port: '))
+#ip = '0.0.0.0'
+#ip = '192.168.0.64'
+#port = int(input('Input port: '))
+port = 9090
 
-sock = socket.socket()
-sock.bind((ip, port))
-sock.listen(2)
-conn, addr = sock.accept()
+server = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+server.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
+server.bind((ip, port))
 
-print('connected:', addr)
-
-while True:
-    data = conn.recv(1024)
-    data = data.decode('utf-8')
-    if 'stop' in data:
-        break
-    conn.send(data)
-
-conn.close()
+while 1:
+    server.setblocking(False)
+    try:
+        message = server.recv(128)
+        print(message.decode('utf-8'))
+    except:
+        continue
