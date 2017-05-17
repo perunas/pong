@@ -4,7 +4,7 @@ ip = input('Input IP: ')
 port = int(input('Input port: '))
 
 sock = socket.socket()
-sock.bind(('localhost', 9090))
+sock.bind((ip, port))
 sock.listen(2)
 conn, addr = sock.accept()
 
