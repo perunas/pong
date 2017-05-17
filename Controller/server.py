@@ -12,7 +12,7 @@ print('connected:', addr)
 
 while True:
     data = conn.recv(1024)
-    data = data.encode('utf-8')
+    data = data.decode('utf-8')
     if 'stop' in data:
         break
     conn.send(data)
